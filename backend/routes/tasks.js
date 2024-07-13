@@ -14,8 +14,15 @@ router.route('/').get(async (req, res) => {
 // Add a new task
 router.route('/add').post(async (req, res) => {
   try {
-    const {title, description, dueDate, priority, status} = req.body;
-    const newTask = new Task({title, description, dueDate, priority, status});
+    const {title, description, dueDate, priority, status, history} = req.body;
+    const newTask = new Task({
+      title,
+      description,
+      dueDate,
+      priority,
+      status,
+      history,
+    });
     const savedTask = await newTask.save();
     res.status(201).json(savedTask); // Respond with saved task data
   } catch (error) {
@@ -27,9 +34,13 @@ router.route('/add').post(async (req, res) => {
 // Update task
 router.route('/update/:id').put(async (req, res) => {
   try {
-    const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const updatedTask = await Task.findByIdAndUpdate(
+      req.params.id,
+      {...req.body, $push: {history: {change: 'Task updated'}}},
+      {
+        new: true,
+      }
+    );
     if (!updatedTask) {
       return res.status(404).json({error: 'Task not found'});
     }
@@ -45,7 +56,7 @@ router.route('/update/:id/status').put(async (req, res) => {
     const {status} = req.body;
     const updatedTask = await Task.findByIdAndUpdate(
       req.params.id,
-      {status},
+      {status, $push: {history: {change: `Status updated to ${status}`}}},
       {new: true}
     );
     if (!updatedTask) {

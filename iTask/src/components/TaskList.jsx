@@ -41,6 +41,7 @@ const TaskList = () => {
       dueDate: task.dueDate,
       priority: task.priority,
     });
+    dispatch(fetchTasks());
   };
 
   const handleEditChange = (e) => {
@@ -52,9 +53,15 @@ const TaskList = () => {
     e.preventDefault();
     dispatch(updateTaskBackend({...editedTask, id: editTaskId}));
     setEditTaskId(null);
+    dispatch(fetchTasks());
   };
 
   const exportTasks = () => {
+    if (tasks.length === 0) {
+      alert('No tasks to export');
+      return;
+    }
+
     const headers = ['Title', 'Description', 'Due Date', 'Priority', 'Status'];
     const rows = tasks.map((task) => [
       task.title,

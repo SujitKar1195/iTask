@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "https://i-task-api-nu.vercel.app/api"
+      "dest": "https://i-task-api-nu.vercel.app/api/$1"
     }
   ]
 }

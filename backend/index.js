@@ -7,6 +7,13 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
 
+
+const corsOptions = {
+  origin: 'https://i-task-backend.vercel.app',
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
+
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());

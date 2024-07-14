@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 const corsOptions = {
-  origin: 'https://<YOUR_FRONTEND_DEPLOYMENT>.vercel.app',
+  origin: 'https://i-task-nine.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 };

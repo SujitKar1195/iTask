@@ -8,12 +8,6 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 
-const corsOptions = {
-  origin: 'https://i-task-neon.vercel.app/',
-  optionsSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
-
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
